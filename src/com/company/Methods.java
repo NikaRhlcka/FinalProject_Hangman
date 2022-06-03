@@ -9,9 +9,9 @@ public class Methods {
     Scanner scanner = new Scanner(System.in);
 
     //selecting random word
-    String[] randWords = new String[]{"dog", "elephant", "window",
-            "nose", "telephone","book", "summer",
-            "mango", "pen", "lake", "connection"};
+    String[] randWords = new String[]{"dog", "window",
+            "nose", "book", "summer",
+            "mango", "pen", "lake" };
 
 
     public void play() {
@@ -37,21 +37,29 @@ public class Methods {
         //create max errors player can make
         int error = 0;
 
-        //StringWriter guessedWord = null;
+        StringBuilder sbf
+                = new StringBuilder("");
 
-        while (error < 5) {
-            //players input
-            if (Arrays.toString(lettersOfSecretWord).equalsIgnoreCase(secretWord)){
-                System.out.println("end game");
+
+        while (error < 5 && !Arrays.toString(lettersOfSecretWord).equalsIgnoreCase(secretWord)) {
+            String a ="";
+
+            for (int i = 0; i < lettersOfSecretWord.length; i++) {
+                a=a+lettersOfSecretWord[i];
             }
 
+            if (a.equalsIgnoreCase(secretWord)){
+                System.out.println("\nYou won!");
+                System.out.println();
+                return;
+            }
+
+            //players input
             System.out.println("\nInput letter:");
             String input = scanner.nextLine();
             char inputLetter = input.charAt(0);
             int strike = 0;
 
-            //StringBuilder guessedWord = new StringBuilder();
-            //guessedWord = "";
 
             //checking letters provided by player
             for (int i = 0; i < secretWord.length(); i++) {
@@ -61,11 +69,6 @@ public class Methods {
 
                 if (inputLetter == eachLetter) {
                     lettersOfSecretWord[i] = inputLetter;
-
-                    //guessedWord.append(inputLetter);
-                    //guessedWord = guessedWord + input;
-                    //guessedWord.append(input);
-                    //System.out.println("string of guessed letters: " + guessedWord);
 
                 } else {
                     strike++;
@@ -90,8 +93,6 @@ public class Methods {
         if (error == 5) {
             System.out.println("\nGame over." + "\nSecret word was: " + secretWord);
             System.out.println();
-        }else if(lettersOfSecretWord.length == secretWord.length()){
-            System.out.println("You won");
         }
 
     } //end of play method
