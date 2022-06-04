@@ -1,8 +1,8 @@
 package com.company;
 
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Methods {
@@ -17,7 +17,7 @@ public class Methods {
 
     public void play() {
         String secretWord = randWords[(int) (Math.random() * randWords.length)];
-        System.out.println(secretWord);
+        //System.out.println(secretWord);
 
         System.out.println("Welcome to Hangman game!");
         System.out.println();
@@ -43,30 +43,16 @@ public class Methods {
 
         while (error < 5 && !Arrays.toString(lettersOfSecretWord).equalsIgnoreCase(secretWord)) {
 
-          /*
-           //moved at the end - looks like it works
-
-           String a ="";
-            for (int i = 0; i < lettersOfSecretWord.length; i++) {
-                a=a+lettersOfSecretWord[i];
-            }
-            if (a.equalsIgnoreCase(secretWord)){
-                System.out.println("\n");
-                System.out.println("You won!");
-                System.out.println();
-                return;
-            }*/
-
             //players input
             System.out.println();
             System.out.println(".............................");
             System.out.println("Input letter:");
-            String input = scanner.nextLine();
+            String input = scanner.nextLine().toLowerCase(Locale.ROOT);
             char inputLetter = input.charAt(0);
             int strike = 0;
 
-            //check if input is small alphabet letters
-            if (input.matches("[a-z]")) {
+            //check if input is valid
+            if (input.matches("[A-Za-z]")) {
 
                 if (Arrays.toString(lettersOfSecretWord).contains(input)) {
                     System.out.println("This letter already been used!\n");
@@ -86,6 +72,16 @@ public class Methods {
                     }
                 }
 
+                for (int y = 0 ; y != wrongLetters.length() ; y++) {
+                    char c = wrongLetters.charAt(y);
+
+                    if (inputLetter == c){
+                        System.out.println("This letter already been tried, try different letter.");
+                        System.out.println("Wrong letters you already tried: " + wrongLetters + "\n");
+                        strike--;
+                    }
+                }
+
                 if (strike == secretWord.length()) {
                     error++;
                     int left = 5 - error;
@@ -95,6 +91,7 @@ public class Methods {
                     //prints wrongly guessed letters
                     wrongLetters = wrongLetters + inputLetter;
                     System.out.println("Wrong letters you already tried: " + wrongLetters + "\n");
+
 
                     //ends game when error=5
                     if (error == 5) {
@@ -111,8 +108,8 @@ public class Methods {
                     System.out.print(lettersOfSecretWord[i]);
                 }
 
-                String a = "";
 
+                String a = "";
                 for (int i = 0; i < lettersOfSecretWord.length; i++) {
                     a = a + lettersOfSecretWord[i];
                 }
